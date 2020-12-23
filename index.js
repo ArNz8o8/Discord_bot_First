@@ -60,9 +60,13 @@ if(command === 'version') {
 
       msg.reply(`le current weather: ${weer.weather[0].main} with a temperature at ${weer.main.temp} degrees, but it feelz like ${weer.main.feels_like} degrees.`)
     }
-        if(command === 'kick') {
-      
-  const user = msg.mentions.users.first()
+    
+  if(command === 'kick') {
+      if(!msg.member.roles.cache.has('791413132101681182')) {
+        msg.reply('you are not allowed to do that..')
+        return
+      }
+        const user = msg.mentions.users.first()
   if(!user) {
     msg.reply('like, who do you want me to kick?')
     return
@@ -75,6 +79,6 @@ if(command === 'version') {
       })
     }
   }
-   })
+})
 
 bot.login(token)
