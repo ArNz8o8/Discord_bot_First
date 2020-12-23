@@ -9,6 +9,12 @@ bot.on('ready', () => {
     console.log ('Echelon logged in')
     })
 
+ bot.on("message", (message) => {
+  if (message.content.includes("8o8" && "3o3")) {
+    message.react("🤍");
+    }
+});
+
 const prefix = "!";
 bot.on('message', async (msg) => {
   if(msg.content[0] !== prefix) {
