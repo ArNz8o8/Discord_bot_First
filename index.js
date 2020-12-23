@@ -3,7 +3,7 @@
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
 const bot = new Discord.Client()
-const token = 'DISCORD_TOKEN'
+const token = 'DISCORD TOKEN'
 bot.on('ready', () => {
     bot.user.setActivity("World of fokkin Warcraft", { type: "PLAYING" });
     console.log ('Echelon logged in')
@@ -38,6 +38,8 @@ if(command === 'version') {
       
       }
 
+
+
   if(command === 'wis') {
     let num = 2;
     if (args[0]) {
@@ -50,14 +52,29 @@ if(command === 'version') {
 
   if(command === 'weer') {
     let geefWeer = async () => {
-      let result = await fetch ('http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=OPENWEATHER_API_TOKEN')
+      let result = await fetch ('http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=WEATHER_API_TOKEN')
       let json = await result.json()
       return json
     }
       let weer = await geefWeer()
 
-      msg.reply(`le current weather: ${weer.weather[0].main} with a temperature at ${weer.main.temp} degrees, but feeling like ${weer.main.feels_like} degrees.`)
+      msg.reply(`le current weather: ${weer.weather[0].main} with a temperature at ${weer.main.temp} degrees, but it feelz like ${weer.main.feels_like} degrees.`)
     }
+        if(command === 'kick') {
+      
+  const user = msg.mentions.users.first()
+  if(!user) {
+    msg.reply('like, who do you want me to kick?')
+    return
+  }
+  const member = msg.guild.member(user)
+  if (member) {
+    member.kick('logged in serverlogs').then(() =>
+      {
+        msg.reply (`${user.tag} was kicked from the server`)
+      })
+    }
+  }
    })
 
 bot.login(token)
