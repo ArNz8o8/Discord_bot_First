@@ -38,15 +38,13 @@ if(command === 'version') {
 
   }
     
-    if(command === 'use') {
+if(command === 'use') {
         msg.reply ('sending you current commands via DM')
         msg.member.send('this bot is under development, however for now you can use: 8o8, version, wis, weer and, well, use. All of these has to start with the prefix !. Also, have a good day, kthxbye')
       
       }
-
-
-
-  if(command === 'wis') {
+    
+if(command === 'wis') {
     let num = 2;
     if (args[0]) {
       num = parseInt(args[0]) + 1;
