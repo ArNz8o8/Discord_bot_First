@@ -30,7 +30,7 @@ bot.on('ready', () => {
 const ArNzEmbed = (
   temp,
   maxTemp,
-  minTemp,
+  feelzTemp,
   pressure,
   humidity,
   wind,
@@ -40,14 +40,14 @@ const ArNzEmbed = (
   new Discord.MessageEmbed()
     .setColor('#FF8315')
     .setTitle(`It is like ${temp}\u00B0 C in The Hague atm`)
-    .addField(`Maximum Temperature:`, `${maxTemp}\u00B0 C`, true)
-    .addField(`Minimum Temperature:`, `${minTemp}\u00B0 C`, true)
+    .addField(`Maximum temp:`, `${maxTemp}\u00B0 C`, true)
+    .addField(`Feelz like:`, `${feelzTemp}\u00B0 C`, true)
     .addField(`Humidity:`, `${humidity} %`, true)
     .addField(`Wind Speed:`, `${wind} m/s`, true)
     .addField(`Pressure:`, `${pressure} hpa`, true)
-    .addField(`Cloudiness:`, `${cloudness}`, true)
+    .addField(`Cloudness:`, `${cloudness}`, true)
     .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
-    .setFooter('Weather provided by Openweathermap');
+    .setFooter('Echelon 🔥 Weather provided by Openweathermap');
     
 // Actual program stuff
 
@@ -92,20 +92,20 @@ if(command === 'version') {
   if(command === 'weather') {
     axios
           .get(
-            `http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=OPEN_WEATHER_API_TOKEN`
+            `http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=OPENWEATHER_API_TOKEN`
           )
           .then(response => {
             let apiData = response;
             let currentTemp = Math.ceil(apiData.data.main.temp)
             let maxTemp = apiData.data.main.temp_max;
-            let minTemp = apiData.data.main.temp_min;
+            let feelzTemp = apiData.data.main.feels_like;
             let humidity = apiData.data.main.humidity;
             let wind = apiData.data.wind.speed;
             let icon = apiData.data.weather[0].icon
             let country = apiData.data.sys.country
             let pressure = apiData.data.main.pressure;
             let cloudness = apiData.data.weather[0].description;
-            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, minTemp, pressure, humidity, wind, cloudness, icon));
+            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, feelzTemp, pressure, humidity, wind, cloudness, icon));
           })
   }
   
