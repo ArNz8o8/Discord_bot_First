@@ -8,7 +8,20 @@ const axios = require('axios')
 const bot = new Discord.Client()
 const token = 'DISCORD TOKEN'
 bot.on('ready', () => {
-    bot.user.setActivity("World of fokkin Warcraft", { type: "PLAYING" });
+    
+  const arnz_state = [
+    "World of Warcraft",
+    "!info",
+    "mixcloud.com/ArNz8o8",
+    "World of fokkin Warcraft",
+    `over $[bot.users.size] users!`
+    ]
+
+    setInterval(() => {
+      const index = Math.floor(Math.random() * (arnz_state.length - 1) + 1);
+      bot.user.setActivity(arnz_state[index]);
+  }, 10000);
+
     console.log ('Echelon logged in')
     });
 
