@@ -23,15 +23,15 @@ let stats = {
 
 bot.on('guildMemberAdd', member => {
   if(member.guild.id !== stats.serverID) return;
-  bot.channels.cache.get(stats.total).setName(`Total userz: ${member.guild.memberCount}`);
-  bot.channels.cache.get(stats.member).setName(`Memberz: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+  bot.channels.cache.get(stats.total).setName(`Total users: ${member.guild.memberCount}`);
+  bot.channels.cache.get(stats.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
   bot.channels.cache.get(stats.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
 })
 
 bot.on('guildMemberRemove', member => {
   if(member.guild.id !== stats.serverID) return;
-  bot.channels.cache.get(stats.total).setName(`Total userz: ${member.guild.memberCount}`);
-  bot.channels.cache.get(stats.member).setName(`Memberz: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+  bot.channels.cache.get(stats.total).setName(`Total users: ${member.guild.memberCount}`);
+  bot.channels.cache.get(stats.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
   bot.channels.cache.get(stats.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
 })
     
