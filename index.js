@@ -1,21 +1,57 @@
 // Coding done by ArNz8o8
+// Echelon Discord bot - 23 dec 2020 0.1
+// Echolon Discord bot - 24 dec 2020 0.2
 
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
+const axios = require('axios')
 const bot = new Discord.Client()
 const token = 'DISCORD TOKEN'
 bot.on('ready', () => {
     bot.user.setActivity("World of fokkin Warcraft", { type: "PLAYING" });
     console.log ('Echelon logged in')
     })
-
- bot.on("message", (message) => {
-  if (message.content.includes("8o8" && "3o3")) {
-    message.react("🤍");
+    
+// This is just because 8o83o3
+    
+    bot.on("message", (message) => {
+    if (message.content.includes("8o8" && "3o3")) {
+      message.react("🤍");
     }
-});
+      else if (message.content === '!guild') {
+          message.channel.send('Guild name: ' + message.guild.name + '\nTotal members: ' + message.guild.memberCount);
+        } else if (message.content === '!whoami') {
+          message.channel.send('Your username: ' + message.author.username + '\nYour ID: ' + message.author.id);
+        }
+  });
 
-const prefix = "!";
+// Embed options
+
+const ArNzEmbed = (
+  temp,
+  maxTemp,
+  minTemp,
+  pressure,
+  humidity,
+  wind,
+  cloudness,
+  icon
+) =>
+  new Discord.MessageEmbed()
+    .setColor('#FF8315')
+    .setTitle(`It is like ${temp}\u00B0 C in The Hague atm`)
+    .addField(`Maximum Temperature:`, `${maxTemp}\u00B0 C`, true)
+    .addField(`Minimum Temperature:`, `${minTemp}\u00B0 C`, true)
+    .addField(`Humidity:`, `${humidity} %`, true)
+    .addField(`Wind Speed:`, `${wind} m/s`, true)
+    .addField(`Pressure:`, `${pressure} hpa`, true)
+    .addField(`Cloudiness:`, `${cloudness}`, true)
+    .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
+    .setFooter('Weather provided by Openweathermap');
+    
+// Actual program stuff
+
+    const prefix = "!";
 bot.on('message', async (msg) => {
   if(msg.content[0] !== prefix) {
     // console.log('Geen uitroepteken gebruikt, ignore much')
@@ -34,17 +70,16 @@ bot.on('message', async (msg) => {
 
 if(command === 'version') {
    msg.reply ('sending the secret stuff via DM')
-   msg.member.send('this bot is made by 8o83o3Designz, version 0.1-alpha.. nothing much, but its something')
+   msg.member.send('this bot is made by 8o83o3Designz, version 0.2-alpha.. nothing much, but its something')
 
   }
     
-if(command === 'info') {
+    if(command === 'info') {
         msg.reply ('sending you current commands via DM')
-        msg.member.send('this bot is under development, however for now you can use: 8o8, version, erase, weather and, well, if you have the right permissions kick and ban. All of these has to start with the prefix !. Also, have a good day, kthxbye')
-      
+        msg.member.send('Heya homeslice \nthis bot is under development, however for now you can use: \n8o8, version, erase, weather, guild, whoami.. and, well, if you have the right permissions kick and ban \nall of these has to start with the prefix ! \nhave a day, kthxbye')
       }
-    
-if(command === 'erase') {
+
+  if(command === 'erase') {
     let num = 2;
     if (args[0]) {
       num = parseInt(args[0]) + 1;
@@ -53,19 +88,30 @@ if(command === 'erase') {
     msg.channel.bulkDelete(num);
     msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af.`);
   }
-
+  
   if(command === 'weather') {
-    let geefWeer = async () => {
-      let result = await fetch ('http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=WEATHER_API_TOKEN')
-      let json = await result.json()
-      return json
-    }
-      let weer = await geefWeer()
-
-      msg.reply(`le current weather: ${weer.weather[0].main} with a temperature at ${weer.main.temp} degrees, but it feelz like ${weer.main.feels_like} degrees.`)
-    }
+    axios
+          .get(
+            `http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=OPEN_WEATHER_API_TOKEN`
+          )
+          .then(response => {
+            let apiData = response;
+            let currentTemp = Math.ceil(apiData.data.main.temp)
+            let maxTemp = apiData.data.main.temp_max;
+            let minTemp = apiData.data.main.temp_min;
+            let humidity = apiData.data.main.humidity;
+            let wind = apiData.data.wind.speed;
+            let icon = apiData.data.weather[0].icon
+            let country = apiData.data.sys.country
+            let pressure = apiData.data.main.pressure;
+            let cloudness = apiData.data.weather[0].description;
+            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, minTemp, pressure, humidity, wind, cloudness, icon));
+          })
+  }
+  
+  // KICK ende BAN stuff
     
-  if (command === 'kick') {
+    if (command === 'kick') {
       if (!msg.member.hasPermission('KICK_MEMBERS'))
         return msg.reply('you are not allowed to do that..');
       if (args.length === 0)
