@@ -38,13 +38,13 @@ if(command === 'version') {
 
   }
     
-if(command === 'use') {
+if(command === 'info') {
         msg.reply ('sending you current commands via DM')
-        msg.member.send('this bot is under development, however for now you can use: 8o8, version, wis, weer and, well, use. All of these has to start with the prefix !. Also, have a good day, kthxbye')
+        msg.member.send('this bot is under development, however for now you can use: 8o8, version, erase, weather and, well, if you have the right permissions kick and ban. All of these has to start with the prefix !. Also, have a good day, kthxbye')
       
       }
     
-if(command === 'wis') {
+if(command === 'erase') {
     let num = 2;
     if (args[0]) {
       num = parseInt(args[0]) + 1;
@@ -54,7 +54,7 @@ if(command === 'wis') {
     msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af.`);
   }
 
-  if(command === 'weer') {
+  if(command === 'weather') {
     let geefWeer = async () => {
       let result = await fetch ('http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=WEATHER_API_TOKEN')
       let json = await result.json()
