@@ -14,7 +14,7 @@ bot.on('ready', () => {
     "!info",
     "mixcloud.com/ArNz8o8",
     "World of fokkin Warcraft",
-    `over $[bot.users.size] users!`
+    "just because I can"
     ]
 
     setInterval(() => {
