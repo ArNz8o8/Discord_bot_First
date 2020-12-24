@@ -65,24 +65,32 @@ if(command === 'wis') {
       msg.reply(`le current weather: ${weer.weather[0].main} with a temperature at ${weer.main.temp} degrees, but it feelz like ${weer.main.feels_like} degrees.`)
     }
     
-  if(command === 'kick') {
-      if(!msg.member.roles.cache.has('791413132101681182')) {
-        msg.reply('you are not allowed to do that..')
-        return
+  if (command === 'kick') {
+      if (!msg.member.hasPermission('KICK_MEMBERS'))
+        return msg.reply('you are not allowed to do that..');
+      if (args.length === 0)
+        return msg.reply('I do need an ID to do that.. so like, right click on le name and copy id');
+      const member = msg.guild.members.cache.get(args[0]);
+      if (member) {
+        member
+          .kick('because you just suck')
+          .then((member) => msg.channel.send(`${member} was kicked.`))
+          .catch((err) => msg.channel.send('wh00pz, I cannot kick that user'));
+      } else {
+        msg.channel.send('I treally have no idea who you are talking about, you l4m3r.. did not use the ID?');
       }
-        const user = msg.mentions.users.first()
-  if(!user) {
-    msg.reply('like, who do you want me to kick?')
-    return
-  }
-  const member = msg.guild.member(user)
-  if (member) {
-    member.kick('logged in serverlogs').then(() =>
-      {
-        msg.reply (`${user.tag} was kicked from the server`)
-      })
+    } else if (command === 'ban') {
+      if (!msg.member.hasPermission('BAN_MEMBERS'))
+        return msg.reply("you are not allowed to do that..");
+      if (args.length === 0) return msg.reply("I do need an ID to do that.. so like, right click on le name and copy id");
+      try {
+        const user = await msg.guild.members.ban(args[0]);
+        msg.channel.send('Noice, that loser was banned successfully, bye Felicia');
+      } catch (err) {
+        console.log(err);
+        msg.channel.send('Cannot execute. Most likely I haz no have permissions or you know, the user was not found');
+      }
     }
-  }
 })
 
 bot.login(token)
