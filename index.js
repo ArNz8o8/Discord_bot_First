@@ -20,7 +20,7 @@ bot.on('ready', () => {
     setInterval(() => {
       const index = Math.floor(Math.random() * (arnz_state.length - 1) + 1);
       bot.user.setActivity(arnz_state[index]);
-  }, 10000);
+  }, 15000);
 
     console.log ('Echelon logged in')
     });
