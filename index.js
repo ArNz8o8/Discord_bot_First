@@ -111,8 +111,26 @@ if(command === 'version') {
   }
     
     if(command === 'info') {
-        msg.reply ('sending you current commands via DM')
-        msg.member.send('Heya homeslice \nthis bot is under development, however for now you can use: \n8o8, version, erase, weather, guild, whoami.. and, well, if you have the right permissions kick and ban \nall of these has to start with the prefix ! \nhave a day, kthxbye')
+      const infoEmbed = new Discord.MessageEmbed()
+      .setColor('#FF8315')
+      .setTitle("Echelon info")
+      .setDescription("Start every command with the prefix ! okay, easy")
+      .setThumbnail('https://i.imgur.com/mhQeaaX.png')
+      .addFields(
+        { name: '\u200B', value: '\u200B' },
+        { name: 'Commands I know, and stick with me..', value: '\u200B'},
+        { name: 'Version', value: 'current version of le bot', inline: true },
+        { name: 'Erase', value: 'delete X lines', inline: true },
+        { name: 'Weather', value: 'only The Hague atm', inline: true },
+        { name: '8o8', value: 'it just is', inline: true },
+        { name: 'Guild', value: 'just useless info', inline: true },
+        { name: 'Whoami', value: 'in case you forgot', inline: true },
+        { name: 'Kick and ban', value: 'but only if you are allowed', inline: true },
+        { name: '\u200B', value: '\u200B' },
+      )
+      .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
+      
+      msg.member.send(infoEmbed)
       }
 
   if(command === 'erase') {
