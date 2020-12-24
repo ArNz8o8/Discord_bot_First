@@ -10,7 +10,30 @@ const token = 'DISCORD TOKEN'
 bot.on('ready', () => {
     bot.user.setActivity("World of fokkin Warcraft", { type: "PLAYING" });
     console.log ('Echelon logged in')
-    })
+    });
+
+// Server Stats - First run
+
+let stats = {
+  serverID: '787809339976056863',
+  total: "791677442959212554",
+  member: "791677507614801930",
+  bots: "791677577365291039"
+}
+
+bot.on('guildMemberAdd', member => {
+  if(member.guild.id !== stats.serverID) return;
+  bot.channels.cache.get(stats.total).setName(`Total Users: ${member.guild.memberCount}`);
+  bot.channels.cache.get(stats.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+  bot.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+})
+
+bot.on('guildMemberRemove', member => {
+  if(member.guild.id !== stats.serverID) return;
+  bot.channels.cache.get(stats.total).setName(`Total Users: ${member.guild.memberCount}`);
+  bot.channels.cache.get(stats.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+  bot.channels.cache.get(stats.bots).setName(`Bots: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+})
     
 // This is just because 8o83o3
     
