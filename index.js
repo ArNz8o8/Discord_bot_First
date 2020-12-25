@@ -124,7 +124,7 @@ if(command === 'version') {
         { name: 'Commands I know, and stick with me..', value: '\u200B'},
         { name: 'Version', value: 'current version of le bot', inline: true },
         { name: 'Erase', value: 'delete X lines', inline: true },
-        { name: 'Weather', value: 'only The Hague atm', inline: true },
+        { name: 'Weather', value: 'enter city name after this command', inline: true },
         { name: '8o8', value: 'it just is', inline: true },
         { name: 'Guild', value: 'just useless info', inline: true },
         { name: 'Whoami', value: 'in case you forgot', inline: true },
