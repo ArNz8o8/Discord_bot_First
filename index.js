@@ -1,6 +1,7 @@
 // Coding done by ArNz8o8
 // Echelon Discord bot - 23 dec 2020 0.1
 // Echolon Discord bot - 24 dec 2020 0.2
+// Echolon Discord bot - 25 dec 2020 0.3 (Added API query to Weather)
 
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
@@ -8,23 +9,24 @@ const axios = require('axios')
 const bot = new Discord.Client()
 const token = 'DISCORD TOKEN'
 bot.on('ready', () => {
-    
-  const arnz_state = [
-    "World of Warcraft",
-    "!info",
-    "mixcloud.com/ArNz8o8",
-    "World of fokkin Warcraft",
-    "just because I can"
-    ]
+    // bot.user.setActivity("World of fokkin Warcraft", { type: "PLAYING" });
 
+    bot.user.setStatus('idle')
+    
+    const arnz_state = [
+      "World of Warcraft",
+      "!info",
+      "mixcloud.com/ArNz8o8",
+      "World of fokkin Warcraft",
+      "just because I can"
+]
     setInterval(() => {
       const index = Math.floor(Math.random() * (arnz_state.length - 1) + 1);
       bot.user.setActivity(arnz_state[index]);
   }, 15000);
-
-    console.log ('Echelon logged in')
+      console.log ('Echelon logged in, taking names and kicking ass')
     });
-
+    
 // Server Stats - First run
 
 let stats = {
@@ -61,7 +63,7 @@ bot.on('guildMemberRemove', member => {
         }
   });
 
-// Embed options
+// Embed options - Weather 
 
 const ArNzEmbed = (
   temp,
@@ -71,19 +73,20 @@ const ArNzEmbed = (
   humidity,
   wind,
   cloudness,
+  stad,
   icon
 ) =>
   new Discord.MessageEmbed()
     .setColor('#FF8315')
-    .setTitle(`It is like ${temp}\u00B0 C in The Hague atm`)
+    .setTitle(`It is ${temp}\u00B0 C in ${stad} like, right now`)
     .addField(`Maximum temp:`, `${maxTemp}\u00B0 C`, true)
     .addField(`Feelz like:`, `${feelzTemp}\u00B0 C`, true)
-    .addField(`Humidity:`, `${humidity} %`, true)
+    // .addField(`Humidity:`, `${humidity} %`, true)
     .addField(`Wind Speed:`, `${wind} m/s`, true)
-    .addField(`Pressure:`, `${pressure} hpa`, true)
-    .addField(`Cloudness:`, `${cloudness}`, true)
+    // .addField(`Pressure:`, `${pressure} hpa`, true)
+    .addField(`Overall weather:`, `${cloudness}`, true)
     .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
-    .setFooter('Echelon 🔥 Weather provided by Openweathermap');
+    .setFooter('Echelon weather coded by ArNz8o8 🔥');
     
 // Actual program stuff
 
@@ -94,22 +97,22 @@ bot.on('message', async (msg) => {
     return
   }
 
-  const args = msg.content.slice(prefix.length).trim().split(' ')
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   console.log(args)
   const command = args.shift().toLowerCase()
   console.log(command)
+
+// The TR808 is coming 
 
   if(command === '8o8') {
     msg.react("🤍")
     msg.reply('make it complete with a 3o3')
   }
-
 if(command === 'version') {
    msg.reply ('sending the secret stuff via DM')
-   msg.member.send('this bot is made by 8o83o3Designz, version 0.2-alpha.. nothing much, but its something')
+   msg.member.send('this bot is made by 8o83o3Designz, version 0.3a-alpha.. nothing much, but its something')
 
   }
-    
     if(command === 'info') {
       const infoEmbed = new Discord.MessageEmbed()
       .setColor('#FF8315')
@@ -129,7 +132,8 @@ if(command === 'version') {
         { name: '\u200B', value: '\u200B' },
       )
       .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
-      
+
+      msg.reply ('sliding into your DM like')
       msg.member.send(infoEmbed)
       }
 
@@ -140,13 +144,15 @@ if(command === 'version') {
     }
     console.log(num);
     msg.channel.bulkDelete(num);
-    msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af.`);
+    msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af 🦄`);
   }
   
   if(command === 'weather') {
+  
     axios
+    
           .get(
-            `http://api.openweathermap.org/data/2.5/weather?q=den%20haag,nl&units=metric&APPID=OPENWEATHER_API_TOKEN`
+            `http://api.openweathermap.org/data/2.5/weather?q=${args.join(" ")}&units=metric&APPID=WEATHER_API_TOKEN`
           )
           .then(response => {
             let apiData = response;
@@ -157,10 +163,13 @@ if(command === 'version') {
             let wind = apiData.data.wind.speed;
             let icon = apiData.data.weather[0].icon
             let country = apiData.data.sys.country
+            let stad = args.join(" ")
             let pressure = apiData.data.main.pressure;
             let cloudness = apiData.data.weather[0].description;
-            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, feelzTemp, pressure, humidity, wind, cloudness, icon));
-          })
+            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, feelzTemp, pressure, humidity, wind, cloudness, stad, icon));
+        }).catch(err => {
+            msg.channel.send(`Sorry dawg, city not found.. or did you not like enter it? Please use: !weather <cityname>`)
+        })
   }
   
   // KICK ende BAN stuff
@@ -188,7 +197,7 @@ if(command === 'version') {
         msg.channel.send('Noice, that loser was banned successfully, bye Felicia');
       } catch (err) {
         console.log(err);
-        msg.channel.send('Cannot execute. Most likely I haz no permissions or you know, the user was not found');
+        msg.channel.send('Cannot execute. Most likely I haz no have permissions or you know, the user was not found');
       }
     }
 })
