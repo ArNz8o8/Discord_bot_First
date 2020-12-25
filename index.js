@@ -144,7 +144,9 @@ if(command === 'version') {
     }
     console.log(num);
     msg.channel.bulkDelete(num);
-    msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af 🦄`);
+    msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af 🦄`)
+    .then(msg => {msg.delete({ timeout: 10000 })
+  })
   }
   
   if(command === 'weather') {
