@@ -78,7 +78,7 @@ const ArNzEmbed = (
 ) =>
   new Discord.MessageEmbed()
     .setColor('#FF8315')
-    .setTitle(`It is ${temp}\u00B0 C in ${stad} like, right now`)
+    .setTitle(`Right now, it is like ${temp}\u00B0 C in ${stad}`)
     .addField(`Maximum temp:`, `${maxTemp}\u00B0 C`, true)
     .addField(`Feelz like:`, `${feelzTemp}\u00B0 C`, true)
     // .addField(`Humidity:`, `${humidity} %`, true)
