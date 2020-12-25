@@ -72,7 +72,7 @@ const ArNzEmbed = (
   pressure,
   humidity,
   wind,
-  cloudness,
+  overall,
   stad,
   icon
 ) =>
@@ -81,8 +81,10 @@ const ArNzEmbed = (
     .setTitle(`It is ${temp}\u00B0 C in ${stad} like, right now`)
     .addField(`Maximum temp:`, `${maxTemp}\u00B0 C`, true)
     .addField(`Feelz like:`, `${feelzTemp}\u00B0 C`, true)
+    // .addField(`Humidity:`, `${humidity} %`, true)
     .addField(`Wind Speed:`, `${wind} m/s`, true)
-    .addField(`Overall weather:`, `${cloudness}`, true)
+    // .addField(`Pressure:`, `${pressure} hpa`, true)
+    .addField(`Overall weather:`, `${overall}`, true)
     .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
     .setFooter('Echelon weather coded by ArNz8o8 🔥');
     
@@ -111,29 +113,29 @@ if(command === 'version') {
    msg.member.send('this bot is made by 8o83o3Designz, version 0.3a-alpha.. nothing much, but its something')
 
   }
-    if(command === 'info') {
-      const infoEmbed = new Discord.MessageEmbed()
-      .setColor('#FF8315')
-      .setTitle("Echelon info")
-      .setDescription("Start every command with the prefix ! okay, easy")
-      .setThumbnail('https://i.imgur.com/mhQeaaX.png')
-      .addFields(
-        { name: '\u200B', value: '\u200B' },
-        { name: 'Commands I know, and stick with me..', value: '\u200B'},
-        { name: 'Version:', value: 'le bot version', inline: true },
-        { name: 'Erase:', value: 'delete X lines', inline: true },
-        { name: 'Weather:', value: 'plus city name', inline: true },
-        { name: '8o8:', value: 'it just is', inline: true },
-        { name: 'Guild:', value: 'just useless info', inline: true },
-        { name: 'Whoami:', value: 'in case you forgot', inline: true },
-        { name: 'Kick and ban:', value: 'but only if you are allowed', inline: true },
-        { name: '\u200B', value: '\u200B' },
-      )
-      .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
+  if(command === 'info') {
+    const infoEmbed = new Discord.MessageEmbed()
+    .setColor('#FF8315')
+    .setTitle("Echelon info")
+    .setDescription("Start every command with the prefix ! okay, easy")
+    .setThumbnail('https://i.imgur.com/mhQeaaX.png')
+    .addFields(
+      { name: '\u200B', value: '\u200B' },
+      { name: 'Commands I know, and stick with me..', value: '\u200B'},
+      { name: 'Version:', value: 'le bot version', inline: true },
+      { name: 'Erase:', value: 'delete X lines', inline: true },
+      { name: 'Weather:', value: 'plus city name', inline: true },
+      { name: '8o8:', value: 'it just is', inline: true },
+      { name: 'Guild:', value: 'just useless info', inline: true },
+      { name: 'Whoami:', value: 'in case you forgot', inline: true },
+      { name: 'Kick and ban:', value: 'but only if you are allowed', inline: true },
+      { name: '\u200B', value: '\u200B' },
+    )
+    .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
 
-      msg.reply ('sliding into your DM like')
-      msg.member.send(infoEmbed)
-      }
+    msg.reply ('sliding into your DM like')
+    msg.member.send(infoEmbed)
+    }
 
   if(command === 'erase') {
     let num = 2;
@@ -150,7 +152,7 @@ if(command === 'version') {
     axios
     
           .get(
-            `http://api.openweathermap.org/data/2.5/weather?q=${args.join(" ")}&units=metric&APPID=WEATHER_API_TOKEN`
+            `http://api.openweathermap.org/data/2.5/weather?q=${args.join(" ")}&units=metric&APPID=OPENWEATHER_API_TOKEN`
           )
           .then(response => {
             let apiData = response;
@@ -163,8 +165,8 @@ if(command === 'version') {
             let country = apiData.data.sys.country
             let stad = args.join(" ")
             let pressure = apiData.data.main.pressure;
-            let cloudness = apiData.data.weather[0].description;
-            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, feelzTemp, pressure, humidity, wind, cloudness, stad, icon));
+            let overall = apiData.data.weather[0].description;
+            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, feelzTemp, pressure, humidity, wind, overall, stad, icon));
         }).catch(err => {
             msg.channel.send(`Sorry dawg, city not found.. or did you not like enter it? Please use: !weather <cityname>`)
         })
