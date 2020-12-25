@@ -122,13 +122,13 @@ if(command === 'version') {
       .addFields(
         { name: '\u200B', value: '\u200B' },
         { name: 'Commands I know, and stick with me..', value: '\u200B'},
-        { name: 'Version', value: 'current version of le bot', inline: true },
-        { name: 'Erase', value: 'delete X lines', inline: true },
-        { name: 'Weather', value: 'enter city name after this command', inline: true },
-        { name: '8o8', value: 'it just is', inline: true },
-        { name: 'Guild', value: 'just useless info', inline: true },
-        { name: 'Whoami', value: 'in case you forgot', inline: true },
-        { name: 'Kick and ban', value: 'but only if you are allowed', inline: true },
+        { name: 'Version:', value: 'current version of le bot', inline: true },
+        { name: 'Erase:', value: 'delete X lines', inline: true },
+        { name: 'Weather:', value: 'plus city name', inline: true },
+        { name: '8o8:', value: 'it just is', inline: true },
+        { name: 'Guild:', value: 'just useless info', inline: true },
+        { name: 'Whoami:', value: 'in case you forgot', inline: true },
+        { name: 'Kick and ban:', value: 'but only if you are allowed', inline: true },
         { name: '\u200B', value: '\u200B' },
       )
       .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
