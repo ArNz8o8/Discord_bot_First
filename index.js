@@ -81,9 +81,7 @@ const ArNzEmbed = (
     .setTitle(`It is ${temp}\u00B0 C in ${stad} like, right now`)
     .addField(`Maximum temp:`, `${maxTemp}\u00B0 C`, true)
     .addField(`Feelz like:`, `${feelzTemp}\u00B0 C`, true)
-    // .addField(`Humidity:`, `${humidity} %`, true)
     .addField(`Wind Speed:`, `${wind} m/s`, true)
-    // .addField(`Pressure:`, `${pressure} hpa`, true)
     .addField(`Overall weather:`, `${cloudness}`, true)
     .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
     .setFooter('Echelon weather coded by ArNz8o8 🔥');
@@ -122,7 +120,7 @@ if(command === 'version') {
       .addFields(
         { name: '\u200B', value: '\u200B' },
         { name: 'Commands I know, and stick with me..', value: '\u200B'},
-        { name: 'Version:', value: 'current version of le bot', inline: true },
+        { name: 'Version:', value: 'le bot version', inline: true },
         { name: 'Erase:', value: 'delete X lines', inline: true },
         { name: 'Weather:', value: 'plus city name', inline: true },
         { name: '8o8:', value: 'it just is', inline: true },
