@@ -139,6 +139,7 @@ if(command === 'version') {
       { name: 'Guild:', value: 'just useless info', inline: true },
       { name: 'Whoami:', value: 'in case you forgot', inline: true },
       { name: 'Urban:', value: 'for settling arguments', inline: true },
+      { name: 'Secret:', value: 'try and find them', inline: true },
       { name: 'Kick and ban:', value: 'but only if you are allowed', inline: true },
       { name: '\u200B', value: '\u200B' },
     )
