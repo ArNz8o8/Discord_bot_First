@@ -98,7 +98,7 @@ const ArNzEmbed = (
     // .addField(`Pressure:`, `${pressure} hpa`, true)
     .addField(`Overall weather:`, `${overall}`, true)
     .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
-    .setFooter('Echelon weather coded by ArNz8o8 🔥');
+    .setFooter('Echelon weather coded by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
 
     // Actual program stuff
 
@@ -106,7 +106,8 @@ const ArNzEmbed = (
 bot.on('message', async (msg) => {
   if(msg.content[0] !== prefix) {
     // console.log('Geen uitroepteken gebruikt, ignore much')
-    return
+    return;
+
   }
 
   const args = msg.content.slice(prefix.length).trim().split(/ +/);
@@ -215,7 +216,7 @@ if (command === 'urban') {
             { name: 'Example', value: trim(answer.example, 1024) },
             { name: '\u200B', value: '\u200B' },
         )
-        .setFooter('Definition taken from urbandictionary 🔥');    
+        .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');  
         
     msg.channel.send(urbanembed)
   }
