@@ -21,9 +21,8 @@ const config = require('./config.json')
 const bot = new Discord.Client()
 
 bot.on('ready', () => {
-    // bot.user.setActivity("World of fokkin Warcraft", { type: "PLAYING" });
-
-    bot.user.setStatus('idle')
+    
+bot.user.setStatus('idle')
     
     const arnz_state = [
       "World of Warcraft",
@@ -100,17 +99,15 @@ const ArNzEmbed = (
     .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
     .setFooter('Echelon weather coded by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
 
-    // Actual program stuff
+// Actual program stuff
 
     const prefix = "!";
 bot.on('message', async (msg) => {
   if(msg.content[0] !== prefix) {
     // console.log('Geen uitroepteken gebruikt, ignore much')
     return;
-
-  }
-
-  const args = msg.content.slice(prefix.length).trim().split(/ +/);
+}
+const args = msg.content.slice(prefix.length).trim().split(/ +/);
   console.log(args)
   const command = args.shift().toLowerCase()
   console.log(command)
@@ -162,13 +159,10 @@ if(command === 'version') {
     .then(msg => {msg.delete({ timeout: 10000 })
   })
   
-  }
-  
-  else if(command === 'weather'|| 'weer') {
+  } else if(command === 'weather'|| 'weer') {
   
     axios
-    
-          .get(
+      .get(
             `http://api.openweathermap.org/data/2.5/weather?q=${args.join(" ")}&units=metric&APPID=${config.weather}`
           )
           .then(response => {
@@ -189,7 +183,7 @@ if(command === 'version') {
         });
     }
   
-    // Urban Dictionary Two
+// Urban Dictionary Two
 
 if (command === 'urban') {
     if (!args.length) {
@@ -208,7 +202,6 @@ if (command === 'urban') {
   
     const urbanembed = new Discord.MessageEmbed()
         .setColor('#FF8315')
-        .setThumbnail('https://i.imgur.com/mhQeaaX.png')
         .setTitle(answer.word)
         .setURL(answer.permalink)
         .addFields(
@@ -221,8 +214,7 @@ if (command === 'urban') {
     msg.channel.send(urbanembed)
   }
 
-
-  // KICK ende BAN stuff
+// KICK ende BAN stuff
     
     if (command === 'kick') {
       if (!msg.member.hasPermission('KICK_MEMBERS'))
