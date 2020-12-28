@@ -13,16 +13,16 @@
 // "axios" for weather
 // "querystring" for Urban Dictionairy
 
-const Discord = require('discord.js')
-const fetch = require('node-fetch')
-const axios = require('axios')
-const querystring = require('querystring')
-const config = require('./config.json')
-const bot = new Discord.Client()
+const Discord = require('discord.js');
+const fetch = require('node-fetch');
+const axios = require('axios');
+const querystring = require('querystring');
+const config = require('./config.json');
+const bot = new Discord.Client();
 
 bot.on('ready', () => {
     
-bot.user.setStatus('idle')
+bot.user.setStatus('idle');
     
     const arnz_state = [
       "World of Warcraft",
