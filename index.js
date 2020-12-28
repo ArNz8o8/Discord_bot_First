@@ -1,13 +1,25 @@
 // Coding done by ArNz8o8
-// Echelon Discord bot - 23 dec 2020 0.1
-// Echolon Discord bot - 24 dec 2020 0.2
-// Echolon Discord bot - 25 dec 2020 0.3 (Added API query to Weather)
+// Copyright 2021 - 808303Designz
+
+// Echelon Discord bot - 23 dec 2020 0.1 - First Run
+// Echolon Discord bot - 24 dec 2020 0.2 - Second Run
+// Echolon Discord bot - 25 dec 2020 0.3 - Added API query to Weather
+// Echolon Discord bot - 28 dec 2020 0.4a - Added Urban Dictionary API
+// Echolon Discord bot - 28 dec 2020 0.4b - Moved API keys to seperate file, moved to beta status
+
+// Required NPMs to be installed before running this bot:
+// "discord.js" because du doi
+// "node-fetch" for weather
+// "axios" for weather
+// "querystring" for Urban Dictionairy
 
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
 const axios = require('axios')
+const querystring = require('querystring')
+const config = require('./config.json')
 const bot = new Discord.Client()
-const token = 'DISCORD TOKEN'
+
 bot.on('ready', () => {
     // bot.user.setActivity("World of fokkin Warcraft", { type: "PLAYING" });
 
@@ -18,7 +30,7 @@ bot.on('ready', () => {
       "!info",
       "mixcloud.com/ArNz8o8",
       "World of fokkin Warcraft",
-      "just because I can"
+      "with yo momma"
 ]
     setInterval(() => {
       const index = Math.floor(Math.random() * (arnz_state.length - 1) + 1);
@@ -63,7 +75,7 @@ bot.on('guildMemberRemove', member => {
         }
   });
 
-// Embed options - Weather 
+// Embed options - Weather/Urban Dictionairy 
 
 const ArNzEmbed = (
   temp,
@@ -87,8 +99,8 @@ const ArNzEmbed = (
     .addField(`Overall weather:`, `${overall}`, true)
     .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
     .setFooter('Echelon weather coded by ArNz8o8 🔥');
-    
-// Actual program stuff
+
+    // Actual program stuff
 
     const prefix = "!";
 bot.on('message', async (msg) => {
@@ -97,7 +109,7 @@ bot.on('message', async (msg) => {
     return
   }
 
-  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+  const args = msg.content.slice(prefix.length).trim().split(/ +/);
   console.log(args)
   const command = args.shift().toLowerCase()
   console.log(command)
@@ -147,14 +159,15 @@ if(command === 'version') {
     msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af 🦄`)
     .then(msg => {msg.delete({ timeout: 10000 })
   })
+  
   }
   
-  if(command === 'weather') {
+  else if(command === 'weather'|| 'weer') {
   
     axios
     
           .get(
-            `http://api.openweathermap.org/data/2.5/weather?q=${args.join(" ")}&units=metric&APPID=OPENWEATHER_API_TOKEN`
+            `http://api.openweathermap.org/data/2.5/weather?q=${args.join(" ")}&units=metric&APPID=${config.weather}`
           )
           .then(response => {
             let apiData = response;
@@ -169,11 +182,43 @@ if(command === 'version') {
             let pressure = apiData.data.main.pressure;
             let overall = apiData.data.weather[0].description;
             msg.channel.send(ArNzEmbed(currentTemp, maxTemp, feelzTemp, pressure, humidity, wind, overall, stad, icon));
-        }).catch(err => {
-            msg.channel.send(`Sorry dawg, city not found.. or did you not like enter it? Please use: !weather <cityname>`)
-        })
-  }
+        }).catch(error=>{
+
+        });
+    }
   
+    // Urban Dictionary Two
+
+if (command === 'urban') {
+    if (!args.length) {
+        return msg.channel.send('Tell me homeslice.. what slang am I looking for eh?');
+    }
+  const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
+    const query = querystring.stringify({ term: args.join(' ') });
+  
+    const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`).then(response => response.json());
+  
+    if (!list.length) {
+        return msg.channel.send(`Le word **${args.join(' ')}** is not a found, is it even a word?`);
+    }
+  
+    const [answer] = list;
+  
+    const urbanembed = new Discord.MessageEmbed()
+        .setColor('#FF8315')
+        .setTitle(answer.word)
+        .setURL(answer.permalink)
+        .addFields(
+            { name: 'Definition', value: trim(answer.definition, 1024) },
+            { name: 'Example', value: trim(answer.example, 1024) },
+            { name: '\u200B', value: '\u200B' },
+        )
+        .setFooter('Definition taken from urbandictionary 🔥');    
+        
+    msg.channel.send(urbanembed)
+  }
+
+
   // KICK ende BAN stuff
     
     if (command === 'kick') {
@@ -204,4 +249,4 @@ if(command === 'version') {
     }
 })
 
-bot.login(token)
+bot.login(config.token)
