@@ -122,7 +122,7 @@ bot.on('message', async (msg) => {
   }
 if(command === 'version') {
    msg.reply ('sending the secret stuff via DM')
-   msg.member.send('this bot is made by 8o83o3Designz, version 0.3a-alpha.. nothing much, but its something')
+   msg.member.send('this bot is made by 8o83o3Designz, version 0.4b-beta.. nothing much, but its something')
 
   }
   if(command === 'info') {
@@ -140,6 +140,7 @@ if(command === 'version') {
       { name: '8o8:', value: 'it just is', inline: true },
       { name: 'Guild:', value: 'just useless info', inline: true },
       { name: 'Whoami:', value: 'in case you forgot', inline: true },
+      { name: 'Urban:', value: 'for settling arguments', inline: true },
       { name: 'Kick and ban:', value: 'but only if you are allowed', inline: true },
       { name: '\u200B', value: '\u200B' },
     )
@@ -206,6 +207,7 @@ if (command === 'urban') {
   
     const urbanembed = new Discord.MessageEmbed()
         .setColor('#FF8315')
+        .setThumbnail('https://i.imgur.com/mhQeaaX.png')
         .setTitle(answer.word)
         .setURL(answer.permalink)
         .addFields(
