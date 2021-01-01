@@ -1,248 +1,161 @@
 // Coding done by ArNz8o8
 // Copyright 2021 - 808303Designz
+// www.8o8networkz.nl
 
 // Echelon Discord bot - 23 dec 2020 0.1 - First Run
-// Echolon Discord bot - 24 dec 2020 0.2 - Second Run
-// Echolon Discord bot - 25 dec 2020 0.3 - Added API query to Weather
-// Echolon Discord bot - 28 dec 2020 0.4a - Added Urban Dictionary API
-// Echolon Discord bot - 28 dec 2020 0.4b - Moved API keys to seperate file, moved to beta status
+// 24 dec 2020 0.2 - Second Run
+// 25 dec 2020 0.3 - Added API query to Weather
+// 28 dec 2020 0.4a - Added Urban Dictionary API
+// 28 dec 2020 0.4b - Moved API keys to separate file, moved to beta status
+
+// Echelon Discord bot II - 29 dec 2020 1.0 - Totally rewrote the code, using modules now, thanks Rani:)
+// 30 dec 2020 1.0a - All running smoothly now, I guess
+// 30 dec 2020 1.0b - Fixed Urban Dictionary again
+// 31 dec 2020 1.0c - Ready for the year 2021
+// 01 jan 2021 1.1a - Re-added the user count
 
 // Required NPMs to be installed before running this bot:
 // "discord.js" because du doi
-// "node-fetch" for weather
+// "node-fetch" for API
 // "axios" for weather
-// "querystring" for Urban Dictionairy
+// "querystring" for Urban Dictionary
+// "moment-duration-format" for stats
+// "moments" for stats
 
+const fs = require('fs');
 const Discord = require('discord.js');
-const fetch = require('node-fetch');
-const axios = require('axios');
-const querystring = require('querystring');
-const config = require('./config.json');
-const bot = new Discord.Client();
+const { prefix, token } = require ('./config.json');
+const welcome = require ('./modules/welcome.js');
+const udsearch = require ('./modules/urban.js');
 
-bot.on('ready', () => {
-    
-bot.user.setStatus('idle');
-    
-    const arnz_state = [
-      "World of Warcraft",
-      "!info",
-      "mixcloud.com/ArNz8o8",
-      "World of fokkin Warcraft",
-      "with yo momma"
-]
-    setInterval(() => {
-      const index = Math.floor(Math.random() * (arnz_state.length - 1) + 1);
-      bot.user.setActivity(arnz_state[index]);
-  }, 15000);
-      console.log ('Echelon logged in, taking names and kicking ass')
-    });
-    
-// Server Stats - First run
+const client = new Discord.Client();
+client.commands = new Discord.Collection();
+process.setMaxListeners(0);
 
-let stats = {
-  serverID: '787809339976056863',
-  total: "791677442959212554",
-  member: "791677507614801930",
-  bots: "791677577365291039"
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+	for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.name, command);
 }
 
-bot.on('guildMemberAdd', member => {
-  if(member.guild.id !== stats.serverID) return;
-  bot.channels.cache.get(stats.total).setName(`Total users: ${member.guild.memberCount}`);
-  bot.channels.cache.get(stats.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
-  bot.channels.cache.get(stats.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
-})
+const cooldowns = new Discord.Collection();
 
-bot.on('guildMemberRemove', member => {
-  if(member.guild.id !== stats.serverID) return;
-  bot.channels.cache.get(stats.total).setName(`Total users: ${member.guild.memberCount}`);
-  bot.channels.cache.get(stats.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
-  bot.channels.cache.get(stats.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
-})
-    
-// This is just because 8o83o3
-    
-    bot.on("message", (message) => {
-    if (message.content.includes("8o8" && "3o3")) {
-      message.react("🤍");
-    }
-      else if (message.content === '!guild') {
-          message.channel.send('Guild name: ' + message.guild.name + '\nTotal members: ' + message.guild.memberCount);
-        } else if (message.content === '!whoami') {
-          message.channel.send('Your username: ' + message.author.username + '\nYour ID: ' + message.author.id);
-        }
-  });
+client.once('ready', () => {
+	  var channel = client.channels.cache.get('787809339976056865');
+	  channel.send("Echelon is back online, ready to kick ass");
+	  client.user.setStatus('idle');
+	
+		const arnz_state = [
+		  "World of Warcraft",
+		  "!info",
+		  "mixcloud.com/ArNz8o8",
+		  "World of fokkin Warcraft",
+		  "v1.1a beta 2021.2"
+	]
+		setInterval(() => {
+		  const index = Math.floor(Math.random() * (arnz_state.length - 1) + 1);
+		  client.user.setActivity(arnz_state[index]);
+	  }, 15000);
+		  console.log ('Echelon logged in, taking names and kicking ass')
+		
+		welcome(client)
+});
 
-// Embed options - Weather/Urban Dictionairy 
+// This is for usercount stats - as names - in voicechannels
 
-const ArNzEmbed = (
-  temp,
-  maxTemp,
-  feelzTemp,
-  pressure,
-  humidity,
-  wind,
-  overall,
-  stad,
-  icon
-) =>
-  new Discord.MessageEmbed()
-    .setColor('#FF8315')
-    .setTitle(`Right now, it is like ${temp}\u00B0 C in ${stad}`)
-    .addField(`Maximum temp:`, `${maxTemp}\u00B0 C`, true)
-    .addField(`Feelz like:`, `${feelzTemp}\u00B0 C`, true)
-    // .addField(`Humidity:`, `${humidity} %`, true)
-    .addField(`Wind Speed:`, `${wind} m/s`, true)
-    // .addField(`Pressure:`, `${pressure} hpa`, true)
-    .addField(`Overall weather:`, `${overall}`, true)
-    .setThumbnail(`http://openweathermap.org/img/w/${icon}.png`)
-    .setFooter('Echelon weather coded by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
+let usercount = {
+	  serverID: '787809339976056863',
+	  total: "791677442959212554",
+	  member: "791677507614801930",
+	  bots: "791677577365291039"
+	}
+	
+	client.on('guildMemberAdd', member => {
+	  if(member.guild.id !== usercount.serverID) return;
+	  client.channels.cache.get(usercount.total).setName(`Total users: ${member.guild.memberCount}`);
+	  client.channels.cache.get(usercount.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+	  client.channels.cache.get(usercount.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+	})
+	
+	client.on('guildMemberRemove', member => {
+	  if(member.guild.id !== usercount.serverID) return;
+	  client.channels.cache.get(usercount.total).setName(`Total users: ${member.guild.memberCount}`);
+	  client.channels.cache.get(usercount.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+	  client.channels.cache.get(usercount.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+	})
+	
+	client.on('guildMemberUpdate', member => {
+		  if(member.guild.id !== usercount.serverID) return;
+		  client.channels.cache.get(usercount.total).setName(`Total users: ${member.guild.memberCount}`);
+		  client.channels.cache.get(usercount.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+		  client.channels.cache.get(usercount.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+	})
 
-// Actual program stuff
+// carry on with regular code
 
-    const prefix = "!";
-bot.on('message', async (msg) => {
-  if(msg.content[0] !== prefix) {
-    // console.log('Geen uitroepteken gebruikt, ignore much')
-    return;
-}
-const args = msg.content.slice(prefix.length).trim().split(/ +/);
-  console.log(args)
-  const command = args.shift().toLowerCase()
-  console.log(command)
+client.on ('message', async message => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-// The TR808 is coming 
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const commandName = args.shift().toLowerCase();
+	
+// loading separate modules here 
+	udsearch(prefix, args, message, client)
+// add more if you want
 
-  if(command === '8o8') {
-    msg.react("🤍")
-    msg.reply('make it complete with a 3o3')
-  }
-if(command === 'version') {
-   msg.reply ('sending the secret stuff via DM')
-   msg.member.send('this bot is made by 8o83o3Designz, version 0.4b-beta.. nothing much, but its something')
+	const command = client.commands.get(commandName)
+		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-  }
-  if(command === 'info') {
-    const infoEmbed = new Discord.MessageEmbed()
-    .setColor('#FF8315')
-    .setTitle("Echelon info")
-    .setDescription("Start every command with the prefix ! okay, easy")
-    .setThumbnail('https://i.imgur.com/mhQeaaX.png')
-    .addFields(
-      { name: '\u200B', value: '\u200B' },
-      { name: 'Commands I know, and stick with me..', value: '\u200B'},
-      { name: 'Version:', value: 'le bot version', inline: true },
-      { name: 'Erase:', value: 'delete X lines', inline: true },
-      { name: 'Weather:', value: 'plus city name', inline: true },
-      { name: '8o8:', value: 'it just is', inline: true },
-      { name: 'Guild:', value: 'just useless info', inline: true },
-      { name: 'Whoami:', value: 'in case you forgot', inline: true },
-      { name: 'Urban:', value: 'for settling arguments', inline: true },
-      { name: 'Secret:', value: 'try and find them', inline: true },
-      { name: 'Kick and ban:', value: 'but only if you are allowed', inline: true },
-      { name: '\u200B', value: '\u200B' },
-    )
-    .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');
+	if (!command) return;
 
-    msg.reply ('sliding into your DM like')
-    msg.member.send(infoEmbed)
-    }
+	if (command.guildOnly && message.channel.type === 'dm') {
+		return message.reply('I can\'t execute that command inside DMs.. go and be public');
+	}
 
-  if(command === 'erase') {
-    let num = 2;
-    if (args[0]) {
-      num = parseInt(args[0]) + 1;
-    }
-    console.log(num);
-    msg.channel.bulkDelete(num);
-    msg.channel.send(`I haz like removed ${args[0]} line(s) for you.. clean af 🦄`)
-    .then(msg => {msg.delete({ timeout: 10000 })
-  })
-  
-  } else if(command === 'weather'|| 'weer') {
-  
-    axios
-      .get(
-            `http://api.openweathermap.org/data/2.5/weather?q=${args.join(" ")}&units=metric&APPID=${config.weather}`
-          )
-          .then(response => {
-            let apiData = response;
-            let currentTemp = Math.ceil(apiData.data.main.temp)
-            let maxTemp = apiData.data.main.temp_max;
-            let feelzTemp = apiData.data.main.feels_like;
-            let humidity = apiData.data.main.humidity;
-            let wind = apiData.data.wind.speed;
-            let icon = apiData.data.weather[0].icon
-            let country = apiData.data.sys.country
-            let stad = args.join(" ")
-            let pressure = apiData.data.main.pressure;
-            let overall = apiData.data.weather[0].description;
-            msg.channel.send(ArNzEmbed(currentTemp, maxTemp, feelzTemp, pressure, humidity, wind, overall, stad, icon));
-        }).catch(error=>{
+	if (command.permissions) {
+		const authorPerms = message.channel.permissionsFor(message.author);
+		if (!authorPerms || !authorPerms.has(command.permissions)) {
+			return message.channel.reply('I bet you think you are really smart..');
+		}
+	}
 
-        });
-    }
-  
-// Urban Dictionary Two
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments, insert coin and try again`;
 
-if (command === 'urban') {
-    if (!args.length) {
-        return msg.channel.send('Tell me homeslice.. what slang am I looking for eh?');
-    }
-  const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
-    const query = querystring.stringify({ term: args.join(' ') });
-  
-    const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`).then(response => response.json());
-  
-    if (!list.length) {
-        return msg.channel.send(`Le word **${args.join(' ')}** is not a found, is it even a word?`);
-    }
-  
-    const [answer] = list;
-  
-    const urbanembed = new Discord.MessageEmbed()
-        .setColor('#FF8315')
-        .setTitle(answer.word)
-        .setURL(answer.permalink)
-        .addFields(
-            { name: 'Definition', value: trim(answer.definition, 1024) },
-            { name: 'Example', value: trim(answer.example, 1024) },
-            { name: '\u200B', value: '\u200B' },
-        )
-        .setFooter('Brought to you by ArNz8o8 🔥', 'https://i.imgur.com/mhQeaaX.png');  
-        
-    msg.channel.send(urbanembed)
-  }
+		if (command.usage) {
+			reply += `\nThe proper banter would be: \`${prefix}${command.name} ${command.usage}\``;
+		}
 
-// KICK ende BAN stuff
-    
-    if (command === 'kick') {
-      if (!msg.member.hasPermission('KICK_MEMBERS'))
-        return msg.reply('you are not allowed to do that..');
-      if (args.length === 0)
-        return msg.reply('I do need an ID to do that.. so like, right click on le name and copy id');
-      const member = msg.guild.members.cache.get(args[0]);
-      if (member) {
-        member
-          .kick('because you just suck')
-          .then((member) => msg.channel.send(`${member} was kicked.`))
-          .catch((err) => msg.channel.send('wh00pz, I cannot kick that user'));
-      } else {
-        msg.channel.send('I treally have no idea who you are talking about, you l4m3r.. did not use the ID?');
-      }
-    } else if (command === 'ban') {
-      if (!msg.member.hasPermission('BAN_MEMBERS'))
-        return msg.reply("you are not allowed to do that..");
-      if (args.length === 0) return msg.reply("I do need an ID to do that.. so like, right click on le name and copy id");
-      try {
-        const user = await msg.guild.members.ban(args[0]);
-        msg.channel.send('Noice, that loser was banned successfully, bye Felicia');
-      } catch (err) {
-        console.log(err);
-        msg.channel.send('Cannot execute. Most likely I haz no have permissions or you know, the user was not found');
-      }
-    }
-})
+		return message.channel.send(reply);
+	}
 
-bot.login(config.token)
+	if (!cooldowns.has(command.name)) {
+		cooldowns.set(command.name, new Discord.Collection());
+		}
+
+	const now = Date.now();
+	const timestamps = cooldowns.get(command.name);
+	const cooldownAmount = (command.cooldown || 3) * 1000;
+
+	if (timestamps.has(message.author.id)) {
+		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+		if (now < expirationTime) {
+			const timeLeft = (expirationTime - now) / 1000;
+			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+		}
+	}
+
+	timestamps.set(message.author.id, now);
+	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+	try {
+		command.execute(message, args);
+	} catch (error) {
+		console.error(error);
+		message.reply('Someone call ArNz, there was an error trying to execute that command.. lame code much');
+	}
+});
+
+client.login(token);
