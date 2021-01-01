@@ -86,10 +86,10 @@ let usercount = {
 	})
 	
 	client.on('guildMemberUpdate', member => {
-		  if(member.guild.id !== usercount.serverID) return;
-		  client.channels.cache.get(usercount.total).setName(`Total users: ${member.guild.memberCount}`);
-		  client.channels.cache.get(usercount.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
-		  client.channels.cache.get(usercount.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
+	  if(member.guild.id !== usercount.serverID) return;
+	  client.channels.cache.get(usercount.total).setName(`Total users: ${member.guild.memberCount}`);
+	  client.channels.cache.get(usercount.member).setName(`Members: ${member.guild.members.cache.filter(m => !m.user.bot).size}`);
+	  client.channels.cache.get(usercount.bots).setName(`Botz: ${member.guild.members.cache.filter(m => m.user.bot).size}`);
 	})
 
 // carry on with regular code
