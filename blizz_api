@@ -1,0 +1,241 @@
+BlizzAPI {
+  clientId: '',
+  clientSecret: '',
+  getAccessToken: [Function],
+  setAccessToken: [Function],
+  region: 'eu',
+  accessToken: '',
+  query: [Function],
+  options: {
+    validateAccessTokenOnEachQuery: false,
+    refreshExpiredAccessToken: false,
+    onAccessTokenExpired: undefined,
+    onAccessTokenRefresh: undefined
+  }
+}
+{
+  _links: {
+    self: {
+      href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze?namespace=profile-eu'
+    }
+  },
+  id: 160410880,
+  name: 'Agonyze',
+  gender: {
+    type: 'FEMALE',
+    name: {
+      en_US: 'Female',
+      es_MX: 'Femenino',
+      pt_BR: 'Feminino',
+      de_DE: 'Weiblich',
+      en_GB: 'Female',
+      es_ES: 'Femenino',
+      fr_FR: 'Femme',
+      it_IT: 'Femmina',
+      ru_RU: 'Женский',
+      ko_KR: '여성',
+      zh_TW: '女性',
+      zh_CN: '女性'
+    }
+  },
+  faction: {
+    type: 'ALLIANCE',
+    name: {
+      en_US: 'Alliance',
+      es_MX: 'Alianza',
+      pt_BR: 'Aliança',
+      de_DE: 'Allianz',
+      en_GB: 'Alliance',
+      es_ES: 'Alianza',
+      fr_FR: 'Alliance',
+      it_IT: 'Alleanza',
+      ru_RU: 'Альянс',
+      ko_KR: '얼라이언스',
+      zh_TW: '聯盟',
+      zh_CN: '联盟'
+    }
+  },
+  race: {
+    key: {
+      href: 'https://eu.api.blizzard.com/data/wow/playable-race/7?namespace=static-9.0.2_36532-eu'
+    },
+    name: {
+      en_US: 'Gnome',
+      es_MX: 'Gnomo',
+      pt_BR: 'Gnomo',
+      de_DE: 'Gnom',
+      en_GB: 'Gnome',
+      es_ES: 'Gnomo',
+      fr_FR: 'Gnome',
+      it_IT: 'Gnomo',
+      ru_RU: 'Гном',
+      ko_KR: '노움',
+      zh_TW: '地精',
+      zh_CN: '侏儒'
+    },
+    id: 7
+  },
+  character_class: {
+    key: {
+      href: 'https://eu.api.blizzard.com/data/wow/playable-class/9?namespace=static-9.0.2_36532-eu'
+    },
+    name: {
+      en_US: 'Warlock',
+      es_MX: 'Brujo',
+      pt_BR: 'Bruxo',
+      de_DE: 'Hexenmeister',
+      en_GB: 'Warlock',
+      es_ES: 'Brujo',
+      fr_FR: 'Démoniste',
+      it_IT: 'Stregone',
+      ru_RU: 'Чернокнижник',
+      ko_KR: '흑마법사',
+      zh_TW: '術士',
+      zh_CN: '术士'
+    },
+    id: 9
+  },
+  active_spec: {
+    key: {
+      href: 'https://eu.api.blizzard.com/data/wow/playable-specialization/267?namespace=static-9.0.2_36532-eu'
+    },
+    name: {
+      en_US: 'Destruction',
+      es_MX: 'Destrucción',
+      pt_BR: 'Destruição',
+      de_DE: 'Zerstörung',
+      en_GB: 'Destruction',
+      es_ES: 'Destrucción',
+      fr_FR: 'Destruction',
+      it_IT: 'Distruzione',
+      ru_RU: 'Разрушение',
+      ko_KR: '파괴',
+      zh_TW: '毀滅',
+      zh_CN: '毁灭'
+    },
+    id: 267
+  },
+  realm: {
+    key: {
+      href: 'https://eu.api.blizzard.com/data/wow/realm/1317?namespace=dynamic-eu'
+    },
+    name: {
+      en_US: 'Darkmoon Faire',
+      es_MX: 'Darkmoon Faire',
+      pt_BR: 'Darkmoon Faire',
+      de_DE: 'Darkmoon Faire',
+      en_GB: 'Darkmoon Faire',
+      es_ES: 'Darkmoon Faire',
+      fr_FR: 'Darkmoon Faire',
+      it_IT: 'Darkmoon Faire',
+      ru_RU: 'Darkmoon Faire',
+      ko_KR: 'Darkmoon Faire',
+      zh_TW: '暗月馬戲團',
+      zh_CN: '暗月马戏团'
+    },
+    id: 1317,
+    slug: 'darkmoon-faire'
+  },
+  guild: {
+    key: {
+      href: 'https://eu.api.blizzard.com/data/wow/guild/darkmoon-faire/wine-and-dine?namespace=profile-eu'
+    },
+    name: 'Wine And Dine',
+    id: 69902604,
+    realm: { key: [Object], name: [Object], id: 1317, slug: 'darkmoon-faire' },
+    faction: { type: 'ALLIANCE', name: [Object] }
+  },
+  level: 60,
+  experience: 0,
+  achievement_points: 24730,
+  achievements: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/achievements?namespace=profile-eu'
+  },
+  titles: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/titles?namespace=profile-eu'
+  },
+  pvp_summary: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/pvp-summary?namespace=profile-eu'
+  },
+  encounters: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/encounters?namespace=profile-eu'
+  },
+  media: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/character-media?namespace=profile-eu'
+  },
+  last_login_timestamp: 1611163003000,
+  average_item_level: 191,
+  equipped_item_level: 191,
+  specializations: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/specializations?namespace=profile-eu'
+  },
+  statistics: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/statistics?namespace=profile-eu'
+  },
+  mythic_keystone_profile: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/mythic-keystone-profile?namespace=profile-eu'
+  },
+  equipment: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/equipment?namespace=profile-eu'
+  },
+  appearance: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/appearance?namespace=profile-eu'
+  },
+  collections: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/collections?namespace=profile-eu'
+  },
+  active_title: {
+    key: {
+      href: 'https://eu.api.blizzard.com/data/wow/title/256?namespace=static-9.0.2_36532-eu'
+    },
+    name: {
+      en_US: 'of the Black Harvest',
+      es_MX: 'de la Cosecha Oscura',
+      pt_BR: 'da Colheita Negra',
+      de_DE: 'von der Schwarzen Ernte',
+      en_GB: 'of the Black Harvest',
+      es_ES: 'de la Cosecha Oscura',
+      fr_FR: 'de la Moisson noire',
+      it_IT: 'il Mietitore Oscuro',
+      ru_RU: 'из Мрачной Жатвы',
+      ko_KR: '암흑의 수확자',
+      zh_TW: '黑穫議會的',
+      zh_CN: '黑暗收割者'
+    },
+    id: 256,
+    display_string: {
+      en_US: '{name} of the Black Harvest',
+      es_MX: '{name} de la Cosecha Oscura',
+      pt_BR: '{name} da Colheita Negra',
+      de_DE: '{name} von der Schwarzen Ernte',
+      en_GB: '{name} of the Black Harvest',
+      es_ES: '{name} de la Cosecha Oscura',
+      fr_FR: '{name} de la Moisson noire',
+      it_IT: '{name} la Mietitrice Oscura',
+      ru_RU: '{name} из Мрачной Жатвы',
+      ko_KR: '암흑의 수확자 {name}',
+      zh_TW: '黑穫議會的{name}',
+      zh_CN: '黑暗收割者 {name}'
+    }
+  },
+  reputations: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/reputations?namespace=profile-eu'
+  },
+  quests: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/quests?namespace=profile-eu'
+  },
+  achievements_statistics: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/achievements/statistics?namespace=profile-eu'
+  },
+  professions: {
+    href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/professions?namespace=profile-eu'
+  },
+  covenant_progress: {
+    chosen_covenant: { key: [Object], name: [Object], id: 2 },
+    renown_level: 5,
+    soulbinds: {
+      href: 'https://eu.api.blizzard.com/profile/wow/character/darkmoon-faire/agonyze/soulbinds?namespace=profile-eu'
+    }
+  },
+  lastModified: 'Wed, 20 Jan 2021 17:16:43 GMT'
+}
