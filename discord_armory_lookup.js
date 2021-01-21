@@ -83,13 +83,13 @@ module.exports = {
 					try {
 						toonRenown = apiData.covenant_progress.renown_level;
 					} catch (error) {
-						toonRenown = "No covenant... yet";
+						toonRenown = "N/A";
 					};
 		            		let toonConvenant
 		            		try {
 						toonConvenant = apiData.covenant_progress.chosen_covenant.name;
 					} catch (error) {
-						toonConvenant = "";
+						toonConvenant = "because no convenant";
 					};
 					let toonLastOnline;
 					try {
