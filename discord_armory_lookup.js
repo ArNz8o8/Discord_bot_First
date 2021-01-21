@@ -35,7 +35,7 @@ module.exports = {
 					toonGuild,
 					toonIlevel,
 					toonRenown,
-		                        toonConvenant,
+		            toonConvenant,
 					toonLastOnline
 				) =>
 
@@ -52,8 +52,8 @@ module.exports = {
 
 			const BnetApi = new BlizzAPI({
 				region: 'eu',
-				clientId: 'SECRET',
-				clientSecret: 'SECRET',
+				clientId: '1991ab0d69674657b487039e01478ee5',
+				clientSecret: 'OxvPNjx5dDhYLlQwzca5DxL9Kx34ilRa',
 				refreshExpiredAccessToken: true,
 			});
 
@@ -85,8 +85,8 @@ module.exports = {
 					} catch (error) {
 						toonRenown = "No covenant... yet";
 					};
-		  let toonConvenant
-		  try {
+		            let toonConvenant
+		            try {
 						toonConvenant = apiData.covenant_progress.chosen_covenant.name;
 					} catch (error) {
 						toonConvenant = "";
