@@ -52,8 +52,8 @@ module.exports = {
 
 			const BnetApi = new BlizzAPI({
 				region: 'eu',
-				clientId: '1991ab0d69674657b487039e01478ee5',
-				clientSecret: 'OxvPNjx5dDhYLlQwzca5DxL9Kx34ilRa',
+				clientId: 'SECRET',
+				clientSecret: 'SECRET',
 				refreshExpiredAccessToken: true,
 			});
 
