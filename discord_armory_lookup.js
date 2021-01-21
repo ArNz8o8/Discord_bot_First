@@ -35,7 +35,7 @@ module.exports = {
 					toonGuild,
 					toonIlevel,
 					toonRenown,
-		            toonConvenant,
+		                    	toonConvenant,
 					toonLastOnline
 				) =>
 
@@ -85,8 +85,8 @@ module.exports = {
 					} catch (error) {
 						toonRenown = "No covenant... yet";
 					};
-		            let toonConvenant
-		            try {
+		            		let toonConvenant
+		            		try {
 						toonConvenant = apiData.covenant_progress.chosen_covenant.name;
 					} catch (error) {
 						toonConvenant = "";
