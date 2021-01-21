@@ -9,8 +9,8 @@ module.exports = {
 	name: "armory",
 	aliases: ["wow", "alt", "toon", "warcraft"],
 	category: "info",
-	description: "Return your World of warcraft character!",
-	usage: "<Character Name | Realm Name | Region (EU, US)>",
+	description: "Check out your WoW character directly from the Blizzard API",
+	usage: "!armory <name> <realm> (realm defaults to Darkmoon Faire, use - instead of spaces)",
 	execute: async (message, args, client) => {
 
 		if (!message.member.hasPermission('BAN_MEMBERS'))
