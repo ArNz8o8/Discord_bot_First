@@ -43,7 +43,7 @@ module.exports = {
 				.setColor('#FF8315')
 				.setTitle(`${toonName} ${toonTitle} (${toonRealm})`)
 				.addField(`Currently at:`, `Level ${toonLevel}`)
-				.addField(`Class:`, `${toonRace} ${toonSpec} ${toonClass}`)
+				.addField(`${toonName} is a:`, `${toonRace} ${toonSpec} ${toonClass}`)
 				.addField(`Guild:`, `\u200b${toonGuild}`)
 				.addField(`Item level:`, `\u200b${toonIlevel}`, true)
 				.addField(`Renown - Convenant:`, `\u200b${toonRenown} - ${toonConvenant}`, true)
