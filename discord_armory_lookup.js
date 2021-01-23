@@ -1,6 +1,7 @@
 // Armory Check for Echelon 808303
 // Coded by ArNz8o8 on jan 21st 2021
 const BlizzAPI = require('blizzapi');
+const querystring = require('querystring');
 const Discord = require("discord.js");
 
 module.exports = {
@@ -26,8 +27,8 @@ module.exports = {
 
 			const BnetApi = new BlizzAPI({
 				region: 'eu',
-				clientId: 'SECRET',
-				clientSecret: 'SECRET',
+				clientId: 'get_your_own_code',
+				clientSecret: 'get_your_own_code',
 				refreshExpiredAccessToken: true,
 			});
 			const character_query = await BnetApi.query(`/profile/wow/character/${realm}/${argz}/character-media?namespace=profile-eu&locale=en_GB`).then((data1) => {
@@ -75,7 +76,7 @@ module.exports = {
 						try {
 							toonConvenant = apiData.covenant_progress.chosen_covenant.name;
 						} catch (error) {
-							toonConvenant = "";
+							toonConvenant = "n/a";
 						};
 						let toonFaction = apiData.faction.name
 						let toonLastOnline;
@@ -131,7 +132,7 @@ module.exports = {
 							.addField(`Currently at:`, `Level ${toonLevel}`)
 							.addField(`${toonName} is a:`, `${toonSex} ${toonRace} ${toonSpec} ${toonClass}`)
 							.addField(`Guild:`, `\u200b${toonGuild}`, true)
-							.addField(`Achievement points:`, `\u200b${toonAchie}`, true)
+							.addField(`Achievements:`, `\u200b${toonAchie} pts`, true)
 							.addField(`Item level:`, `\u200b${toonIlevel}`, true)
 							.addField(`Renown:`, `\u200b${toonRenown} - (${toonConvenant})`, true)
 							.addField(`Faction:`, `\u200b${toonFaction}`, true)
