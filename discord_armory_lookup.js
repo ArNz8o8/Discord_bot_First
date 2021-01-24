@@ -3,6 +3,7 @@
 const BlizzAPI = require('blizzapi');
 const querystring = require('querystring');
 const Discord = require("discord.js");
+const config = require('../config.json');
 
 module.exports = {
 	name: "armory",
@@ -23,12 +24,11 @@ module.exports = {
 			let argz = args[0].toLowerCase();
 			if (!realm) realm = "darkmoon-faire"
 
-
-
-			const BnetApi = new BlizzAPI({
-				region: 'eu',
-				clientId: 'get_your_own_code',
-				clientSecret: 'get_your_own_code',
+            const BnetApi = new BlizzAPI({
+				region: config.default_region,
+		        realm: config.default_realm, 
+				clientId: config.BLIZZARD_API_KEY,
+				clientSecret: config.BLIZZARD_API_SECRET,
 				refreshExpiredAccessToken: true,
 			});
 			const character_query = await BnetApi.query(`/profile/wow/character/${realm}/${argz}/character-media?namespace=profile-eu&locale=en_GB`).then((data1) => {
@@ -128,7 +128,6 @@ module.exports = {
 							new Discord.MessageEmbed()
 							.setColor('#FF8315')
 							.setTitle(`${toonName} ${toonTitle} (${toonRealm})`)
-							.setDescription(`[Warcraft armory link](https://worldofwarcraft.com/en-gb/character/eu/${realm}/${argz})`)
 							.setThumbnail(`${toonAvatar}`)
 							.addField(`Currently at:`, `Level ${toonLevel}`)
 							.addField(`${toonName} is a:`, `${toonSex} ${toonRace} ${toonSpec} ${toonClass}`)
@@ -138,6 +137,7 @@ module.exports = {
 							.addField(`Renown:`, `\u200b${toonRenown} - (${toonConvenant})`, true)
 							.addField(`Faction:`, `\u200b${toonFaction}`, true)
 							.addField(`Last seen:`, `\u200b${toonLastOnline}`, true)
+			  .setDescription(`[Armory link](https://worldofwarcraft.com/en-gb/character/eu/${realm}/${argz})`)
 							.setFooter('World of Warcraft Armory lookup coded by ArNz8o8', 'https://i.imgur.com/5r8LkNz.png');
 
 						message.channel.send(Embed(toonName, toonTitle, toonRealm, toonAvatar, toonLevel, toonSex, toonRace, toonSpec, toonClass, toonGuild, toonAchie, toonIlevel, toonRenown, toonConvenant, toonFaction, toonFormattedTime));
