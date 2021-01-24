@@ -128,6 +128,7 @@ module.exports = {
 							new Discord.MessageEmbed()
 							.setColor('#FF8315')
 							.setTitle(`${toonName} ${toonTitle} (${toonRealm})`)
+							.setDescription(`[Warcraft armory link](https://worldofwarcraft.com/en-gb/character/eu/${realm}/${argz})`)
 							.setThumbnail(`${toonAvatar}`)
 							.addField(`Currently at:`, `Level ${toonLevel}`)
 							.addField(`${toonName} is a:`, `${toonSex} ${toonRace} ${toonSpec} ${toonClass}`)
